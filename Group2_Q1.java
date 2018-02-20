@@ -29,12 +29,12 @@ public class Group2_Q1<E extends Comparable<E>> {
 		Node<E> left;
 		Node<E> right;
 
-		public Node (E e) {
+		public Node(E e) {
 			this.element = e;
 		}
-	
+
 		@Override
-		public int compareTo (Node<E> o) {
+		public int compareTo(Node<E> o) {
 			return this.element.compareTo(o.element);
 		}
 	}
@@ -42,7 +42,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 	/*******************************
 	 * Populate for testing
 	 *******************************/
-	public void populate (E[] e) {
+	public void populate(E[] e) {
 		this.root = new Node<E>(e[0]);
 		this.root.left = new Node<E>(e[1]);
 		this.root.right = new Node<E>(e[2]);
@@ -55,7 +55,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 	/*******************************
 	 * Inorder Version 1
 	 *******************************/
-	public void inorder () {
+	public void inorder() {
 		if (this.root == null)
 			return;
 
@@ -85,7 +85,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 	/*******************************
 	 * Inorder Version 2
 	 *******************************/
-	public void inorder2 () {
+	public void inorder2() {
 		Stack<Node<E>> stacky = new Stack<Node<E>>();
 		Node<E> current = this.root;
 
@@ -107,7 +107,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 	/*******************************
 	 * Postorder Version 2, 2 stacks
 	 *******************************/
-	public void postorderNoRecursion2 () {
+	public void postorderNoRecursion2() {
 		Stack<Node<E>> stack = new Stack<Node<E>>();
 		stack.push(this.root);
 		Stack<E> out = new Stack<E>();
@@ -122,6 +122,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 			if (current.right != null)
 				stack.push(current.right);
 		}
+
 		while (out.size() > 0) {
 			System.out.print(out.pop() + " ");
 		}
@@ -130,7 +131,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 	/*******************************
 	 * Postorder Version 3, 1 stack
 	 *******************************/
-	public void postorderNoRecursion3 () {
+	public void postorderNoRecursion3() {
 		if (this.root == null) // No root, nothing to traverse
 			return;
 
@@ -156,6 +157,7 @@ public class Group2_Q1<E extends Comparable<E>> {
 						System.out.print(temp.element + " "); // Print out the last value pop'd
 					}
 				}
+
 				else
 					current = temp; // The topmost element has a right child, current is that element now
 			}
