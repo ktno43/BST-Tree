@@ -8,8 +8,11 @@
  * M/W 9:30 a.M - 10:45 A.M
  * 
  * Project 1: 
- * Phase 1, Phase 2 (Question 1), 
- * & Phase 3 (Question 2)
+ * Phase 1 (BST Implementation), 
+ * Phase 2 (Question 1), 
+ * Phase 3 (Question 2), &
+ * Phase 4 (Question 3)
+ * 
  * 
  * Group2_Driver.java
  * 
@@ -18,7 +21,7 @@
  * 
  * 
  * Also displayed is the implementation
- * of Phase 2 & Phase 3, postorder &
+ * of Phase 2,3 & 4.  Postorder &
  * inorder traversal without recursion
  * and the number of non-leaf nodes 
  * within the tree.
@@ -65,10 +68,49 @@ public class Group2_Driver {
 	}
 
 	/******************************
+	 * Insert & Display into BST
+	 ******************************/
+	public static void insert(Group2_BST<Integer> tree) {
+		insertNormal(tree); // Insert fixed values into BST
+
+		displayTree(tree); // Display tree
+		isThere(tree); // Check to see if elements are in the BST
+		displaySize(tree); // Get size of tree
+		displayNonLeaf(tree); // Get # of non-leaves
+		displayTraversal(tree); // Display Traversals
+	}
+
+	/******************************
+	 * Delete a node & Display BST
+	 ******************************/
+	public static void delete(Group2_BST<Integer> tree, int toDelete) {
+		System.out.println("Was deleting " + toDelete + " successful?  " + tree.delete(toDelete));
+
+		displayTree(tree); // Print tree
+		displaySize(tree); // Get size of tree
+		displayNonLeaf(tree); // Get # of non-leaves
+		displayTraversal(tree); // Display traversals
+	}
+
+	/******************************
+	 * Display Search Attempts
+	 ******************************/
+	public static void isThere(Group2_BST<Integer> tree) {
+		// Attempt a search for a number in BST, should be true
+		System.out.println("Searching for 9 in the tree . . .");
+		System.out.println("Element 9 is in the BST:  " + tree.search(9));
+		System.out.println();
+
+		// Attempt a search for a number not in BST, should be false
+		System.out.println("Searching for 55 in the tree . . .");
+		System.out.println("Element 55 is in the BST:  " + tree.search(55));
+		System.out.println();
+	}
+
+	/******************************
 	 * Display Tree Traversal
 	 ******************************/
 	public static void displayTraversal(Group2_BST<Integer> tree) {
-
 		System.out.println("Inorder traversal of the given tree");
 		tree.inorder();
 		System.out.println();
@@ -97,34 +139,10 @@ public class Group2_Driver {
 	}
 
 	/******************************
-	 * Display Search Attempts
+	 * Populate BST w/
+	 * 5, 2, -4, 3, 12, 9, 21
+	 * 19, 25 6, 8, 22, -5
 	 ******************************/
-	public static void isThere(Group2_BST<Integer> tree) {
-
-		// Attempt a search for a number in BST, should be true
-		System.out.println("Searching for 9 in the tree . . .");
-		System.out.println("Element 9 is in the BST:  " + tree.search(9));
-		System.out.println();
-
-		// Attempt a search for a number not in BST, should be false
-		System.out.println("Searching for 55 in the tree . . .");
-		System.out.println("Element 55 is in the BST:  " + tree.search(55));
-		System.out.println();
-	}
-
-	/******************************
-	 * Insert & Display into BST
-	 ******************************/
-	public static void insert(Group2_BST<Integer> tree) {
-		insertNormal(tree);
-
-		displayTree(tree);
-		isThere(tree);
-		displaySize(tree);
-		displayNonLeaf(tree);
-		displayTraversal(tree);
-	}
-
 	private static void insertNormal(Group2_BST<Integer> tree) {
 		System.out.println("Inserting 5, 2, -4, 3, 12, 9, 21, 19, 25, 6, 8, 22, -5 into BST");
 
@@ -137,6 +155,10 @@ public class Group2_Driver {
 		tree.insert(21);
 		tree.insert(19);
 
+		checkSearch(tree);
+	}
+
+	private static void checkSearch(Group2_BST<Integer> tree) {
 		// Attempt to insert a number, should be true
 		System.out.println("Was 25 successfully inserted?  " + tree.insert(25));
 		System.out.println();
@@ -145,17 +167,5 @@ public class Group2_Driver {
 		System.out.println("Attempting to insert 21, a duplicate into BST . . .");
 		System.out.println("Was 21 successfully inserted?  " + tree.insert(21));
 		System.out.println();
-	}
-
-	/******************************
-	 * Delete a node & Display BST
-	 ******************************/
-	public static void delete(Group2_BST<Integer> tree, int toDelete) {
-		System.out.println("Was deleting " + toDelete + " successful?  " + tree.delete(toDelete));
-
-		displayTree(tree);
-		displaySize(tree);
-		displayNonLeaf(tree);
-		displayTraversal(tree);
 	}
 }

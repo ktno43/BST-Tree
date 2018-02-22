@@ -8,26 +8,26 @@
  * M/W 9:30 a.M - 10:45 A.M
  * 
  * Project 1: 
- * Phase 1, Phase 2 (Question 1), 
- * & Phase 3 (Question 2)
+ * Phase 1 (BST Implementation), 
+ * Phase 2 (Question 1), 
+ * Phase 3 (Question 2), &
+ * Phase 4 (Question 3)
  * 
  * Group2_BST_Node.java
  * 
- * Driver class to test various methods
- * implemented in the BST class.
+ * BST Node for the BST class to use.
+ * The node contains the most basic
+ * necessities on what encapsulates 
+ * a node.  
  * 
+ * The insertion, deletion, and searching
+ * algorithms are also included in the
+ * most basic node class.
  * 
- * Also displayed is the implementation
- * of Phase 2 & Phase 3, postorder &
- * inorder traversal without recursion
- * and the number of non-leaf nodes 
- * within the tree.
- * 
- * All of the displays are properly 
- * displaying the correct results as 
- * well as performing the correct tasks.
+ * Also implemented is the comparable
+ * interface which allows for the 
+ * comparison of two nodes.
  ****************************************/
-
 public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Group2_BST_Node<E>> {
 	private E element; // Data for node
 	private Group2_BST_Node<E> left; // Reference to left child
@@ -38,60 +38,67 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	}
 
 	/*******************************
-	 * Attempt to insert node
+	 * Attempt to search for a node
 	 *******************************/
-	protected boolean insert(E e) { // Insert node with value e
-		if (e.compareTo(this.element) == 0) // No duplicates allowed
-			return false; // Didn't insert anything so return false
+	protected boolean search(E e) {
+		Group2_BST_Node<E> currentNode = this; // Current reference for node
 
-		else if (e.compareTo(this.element) < 0) { // If to-insert node is smaller than current node, go left
-			if (this.left == null) { // If there's a space available put new node here
-				this.left = new Group2_BST_Node<E>(e); // Make a new node with value e
-				return true; // Return true since we inserted successfully
-			}
+		while (true) {
+			if (currentNode == null) // Reached the end and no results
+				break;
 
-			else
-				return this.left.insert(e); // No space available so recursively call from the current-left node
+			if (e.compareTo(currentNode.element) == 0) // Match found
+				return true; // Search successful
+
+			boolean goLeft = e.compareTo(currentNode.element) < 0; // Traverse left?
+
+			currentNode = goLeft ? currentNode.left : currentNode.right; // If true go left, else go right
 		}
-
-		else if (e.compareTo(this.element) > 0) { // If to-insert node is greater than current node, go right
-			if (this.right == null) { // If there's a space available put new node here
-				this.right = new Group2_BST_Node<E>(e);
-				return true; // Return true since we inserted successfully
-			}
-
-			else
-				return this.right.insert(e); // No space available so recursively call from the current-right node
-		}
-		return false; // Insert was not successful
+		return false; // Search unsuccessful
 	}
 
 	/*******************************
-	 * Attempt to delete node
+	 * Attempt to insert a node
+	 *******************************/
+	protected boolean insert(E e) {
+		Group2_BST_Node<E> currentNode = this; // Current reference for node
+
+		while (true) { // Find a location to insert node into the BST
+			Group2_BST_Node<E> parentNode = currentNode; // Reference to parent node
+
+			if (e.compareTo(currentNode.element) == 0) // No duplicates allowed
+				return false; // Didn't insert anything so return false
+
+			boolean goLeft = e.compareTo(currentNode.element) < 0; // Traverse left?
+
+			currentNode = goLeft ? currentNode.left : currentNode.right; // If true go left, else go right
+
+			if (currentNode == null) { // Found an empty space to put new node
+				if (goLeft)
+					parentNode.left = new Group2_BST_Node<E>(e);
+
+				else
+					parentNode.right = new Group2_BST_Node<E>(e);
+
+				break; // New node was created, stop while loop
+			}
+		}
+		return true; // Insert was successful
+	}
+
+	/*******************************
+	 * Attempt to delete a node
 	 *******************************/
 	protected boolean delete(E e, Group2_BST_Node<E> parent) { // Delete node with value e, parent also passed in to fix references
-		if (e.compareTo(this.element) < 0) { // If to-delete node is smaller than current node, go left
-			if (this.left != null) // Traverse down the left side until to-delete node is found
-				return this.left.delete(e, this);
+		boolean goLeft = e.compareTo(this.element) < 0; // Traverse left?
 
-			else
-				return false; // No match found since you traveled down the entire left sub-tree
-		}
-
-		else if (e.compareTo(this.element) > 0) { // If to-delete node is greater than current node, go right
-			if (this.right != null) // Traverse down the right side until to-delete node is found
-				return this.right.delete(e, this);
-
-			else
-				return false; // No match found since you traveled down the entire right sub-tree
-		}
-
-		else { // Match found since e.compareTo(this.element) = 0
+		if (e.compareTo(this.element) == 0) { // Match found
 			if (this.left != null && this.right != null) { // Case 2: Current node has two children
 				this.element = this.right.getSucessor(); // Find the inorder successor and swap
-				// Two nodes with the same value now, now remove 19 from the left subtree
-				this.right.delete(this.element, this); //
+
+				this.right.delete(this.element, this); // Two nodes with the same value now, now remove duplicate from the left subtree
 			}
+
 			// Find node to be deleted
 			// Case 0: No children, parent's left/right reference will be null
 			// (Assign parent's left/right reference to null)
@@ -113,33 +120,42 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 																			 // No kids, "this" reference to left/right will be null by default
 			return true; // Return true since deletion was successful
 		}
+
+		else if (goLeft && this.left != null) // Match wasn't found, traverse left
+			return this.left.delete(e, this);
+
+		else if (!goLeft && this.right != null) // Match wasn't found, traverse right
+			return this.right.delete(e, this);
+
+		else
+			return false; // Deletion unsuccessful
 	}
 
 	/*******************************
 	 * Get data
 	 *******************************/
-	protected E getData() {
+	protected E getData() { // Return node's value
 		return this.element;
 	}
 
 	/*******************************
 	 * Get left reference
 	 *******************************/
-	protected Group2_BST_Node<E> getLeft() {
+	protected Group2_BST_Node<E> getLeftNode() { // Return node's left reference
 		return this.left;
 	}
 
 	/*******************************
 	 * Get right reference
 	 *******************************/
-	protected Group2_BST_Node<E> getRight() {
+	protected Group2_BST_Node<E> getRightNode() { // Return node's right reference
 		return this.right;
 	}
 
 	/*******************************
 	 * Get inorder successor
 	 *******************************/
-	private E getSucessor() { // Method called from node.right, keep going left to find inorder successor
+	private E getSucessor() { // Method called from this.right, keep going left to find inorder successor
 		if (this.left == null) // Found inorder successor
 			return this.element;
 
