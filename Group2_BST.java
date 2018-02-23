@@ -14,7 +14,7 @@
  * Phase 4 (Question 3)
 * 
 * Group2_BST.java
-*  Version 9.0
+* Version 10.0
 * 
 * The program works as expected, and
 * follows specifications.  All the
