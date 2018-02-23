@@ -33,10 +33,10 @@
 * All of the methods work as expected
 * and return the correct results.
 ****************************************/
-import java.util.List;
 import java.util.Stack;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	private Group2_BST_Node<E> root; // Root Node
@@ -69,8 +69,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	}
 
 	/*******************************
-	 * Question 2:
-	 * Get # of non-leaf nodes
+	 * Question 2: Get # of non-leaf nodes
 	 *******************************/
 	public int getNumberofNonLeaves() {
 		return getNumberofNonLeaves(this.root); // Start at root
@@ -129,12 +128,12 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	@Override
 	public void preorder() { // Middle -> Left -> Right
 		ArrayList<E> resultList = new ArrayList<E>(); // Array List to store result
-		String listAsString = "Preoder: "; // Array list to string
+		String listAsString = "Preoder:  "; // Array list to string
 
 		preorderIterator(this.root, resultList); // Method call, pass in the root and list to be modified
 
 		for (E e : resultList) { // For every element in resultList, put into e and add it to the string
-			listAsString += e + " ";
+			listAsString += e + "  ";
 		}
 
 		System.out.println(listAsString); // Print string out
@@ -156,12 +155,12 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	@Override
 	public void inorder() { // Left -> Middle -> Right
 		ArrayList<E> resultList = new ArrayList<E>(); // Array list to store result
-		String listAsString = "Inorder: "; // Array list to string
+		String listAsString = "Inorder:  "; // Array list to string
 
 		inorderIterator(this.root, resultList); // Method call, pass in the root and list to be modified
 
 		for (E e : resultList) { // For every element in resultList, put into e and add it to the string
-			listAsString += e + " ";
+			listAsString += e + "  ";
 		}
 
 		System.out.println(listAsString); // Print string out
@@ -177,10 +176,9 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		}
 	}
 
-	/****************************************
-	 * Question 3:
-	 * Inorder traversal of BST w/o recursion
-	 ****************************************/
+	/*****************************************************
+	 * Question 3: Inorder traversal of BST w/o recursion
+	 *****************************************************/
 	public void inorderNoRecursion() { // Inorder traversal without recursion
 		Stack<Group2_BST_Node<E>> stacky = new Stack<Group2_BST_Node<E>>(); // Create stack
 		Group2_BST_Node<E> current = this.root; // Current position in tree (start at the root)
@@ -193,14 +191,11 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 			}
 
 			else { /*
-					 * At this point it does not have:
-					 * 1) A left-subtree => Reached the end of the left-subtree, pop and display the data
-					 * 2) Left/right-subtrees => Reached the middle (parent), pop and display the data
-					 * 3) A right-subtree => Reached the end of the right-subtree, pop and and display the data
+					 * At this point it does not have: 1) A left-subtree => Reached the end of the left-subtree, pop and display the data 2) Left/right-subtrees => Reached the middle (parent), pop and display the data 3) A right-subtree => Reached the end of the right-subtree, pop and and display the data
 					 */
 				Group2_BST_Node<E> popVal = stacky.pop(); // Pop the element off the stack and display it's data
 
-				System.out.print(popVal.getData() + " ");
+				System.out.print(popVal.getData() + "  ");
 
 				current = popVal.getRightNode(); // Check to see if it has a right-subtree
 			}
@@ -213,12 +208,12 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	@Override
 	public void postorder() {  // Left -> Right -> Middle
 		ArrayList<E> resultList = new ArrayList<E>(); // Array list to store result
-		String listAsString = "Postorder: "; // Array list to string
+		String listAsString = "Postorder:  "; // Array list to string
 
 		postorderIterator(this.root, resultList); // Method call, pass in the root and the list to be modified
 
 		for (E e : resultList) { // For every element in resultList, put into e and add it to the string
-			listAsString += e + " ";
+			listAsString += e + "  ";
 		}
 
 		System.out.println(listAsString); // Print string out
@@ -234,10 +229,9 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		}
 	}
 
-	/*******************************************
-	 * Question 1:
-	 * Postorder traversal of BST w/o recursion
-	 *******************************************/
+	/*******************************************************
+	 * Question 1: Postorder traversal of BST w/o recursion
+	*******************************************************/
 	public void postorderNoRecursion() {
 		if (this.root == null) // No root, nothing to traverse
 			return;
@@ -259,14 +253,14 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 				if (temp == null) { // Topmost element does not have a right child, pop the right-subtree
 					temp = stack.pop();
 
-					System.out.print(temp.getData() + " "); // Print out the last value pop'd
+					System.out.print(temp.getData() + "  "); // Print out the last value pop'd
 
 					while (stack.size() > 0 && temp == stack.peek().getRightNode()) { // While the stack is not empty and check to see if temp was the right child of the topmost element of the stack
 						// If the while condition fails it means there is another right-subtree
 
 						temp = stack.pop(); // The right-subtree is finished, and now pop the parent node
 
-						System.out.print(temp.getData() + " "); // Print out the last value pop'd
+						System.out.print(temp.getData() + "  "); // Print out the last value pop'd
 					}
 				}
 
@@ -277,101 +271,16 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	}
 
 	/*******************************
-	 * Print Tree
+	 * Print tree vertically
 	 *******************************/
 	public void printTree() {
-		BSTreePrinter.printNode(this.root); // Print tree-like structure
+		this.root.printNode();
 	}
-
-	/*************************************
-	 * BST Printer Class @Michal Kreuzman
-	 *************************************/
-	public static class BSTreePrinter {
-		public static <E extends Comparable<E>> void printNode(Group2_BST_Node<E> root) {
-			int maxLevel = BSTreePrinter.maxLevel(root);
-
-			printNode(Collections.singletonList(root), 1, maxLevel);
-		}
-
-		private static <E extends Comparable<E>> void printNode(List<Group2_BST_Node<E>> nodes, int level,
-				int maxLevel) {
-			if (nodes.isEmpty() || BSTreePrinter.isAllElementsNull(nodes))
-				return;
-
-			int floor = maxLevel - level;
-			int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
-			int firstSpaces = (int) Math.pow(2, (floor)) - 1;
-			int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
-
-			BSTreePrinter.printWhitespaces(firstSpaces);
-
-			List<Group2_BST_Node<E>> newNodes = new ArrayList<Group2_BST_Node<E>>();
-			for (Group2_BST_Node<E> node : nodes) {
-				if (node != null) {
-					System.out.print(node.getData());
-					newNodes.add(node.getLeftNode());
-					newNodes.add(node.getRightNode());
-				}
-
-				else {
-					newNodes.add(null);
-					newNodes.add(null);
-					System.out.print(" ");
-				}
-				BSTreePrinter.printWhitespaces(betweenSpaces);
-			}
-
-			System.out.println("");
-
-			for (int i = 1; i <= endgeLines; i++) {
-				for (int j = 0; j < nodes.size(); j++) {
-					BSTreePrinter.printWhitespaces(firstSpaces - i);
-
-					if (nodes.get(j) == null) {
-						BSTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
-						continue;
-					}
-
-					if (nodes.get(j).getLeftNode() != null)
-						System.out.print("/");
-
-					else
-						BSTreePrinter.printWhitespaces(1);
-
-					BSTreePrinter.printWhitespaces(i + i - 1);
-
-					if (nodes.get(j).getRightNode() != null)
-						System.out.print("\\");
-					else
-						BSTreePrinter.printWhitespaces(1);
-
-					BSTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
-				}
-				System.out.println("");
-			}
-			printNode(newNodes, level + 1, maxLevel);
-		}
-
-		private static void printWhitespaces(int count) {
-			for (int i = 0; i < count; i++)
-				System.out.print(" ");
-		}
-
-		private static <E extends Comparable<E>> int maxLevel(Group2_BST_Node<E> node) {
-			if (node == null)
-				return 0;
-
-			else
-				return Math.max(BSTreePrinter.maxLevel(node.getLeftNode()), BSTreePrinter.maxLevel(node.getRightNode()))
-						+ 1;
-		}
-
-		private static <E> boolean isAllElementsNull(List<E> list) {
-			for (Object object : list) {
-				if (object != null)
-					return false;
-			}
-			return true;
-		}
+	
+	/*******************************
+	 * Print tree horizontally
+	 *******************************/
+	public void printTree2(OutputStreamWriter out) throws IOException {
+		this.root.printTree(out);
 	}
 }

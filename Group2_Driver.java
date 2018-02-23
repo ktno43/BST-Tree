@@ -33,7 +33,7 @@
  ****************************************/
 public class Group2_Driver {
 
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		Group2_BST<Integer> tree = new Group2_BST<Integer>();
 
 		displaySize(tree);
@@ -49,21 +49,21 @@ public class Group2_Driver {
 	/******************************
 	 * Display tree
 	 ******************************/
-	public static void displayTree(Group2_BST<Integer> tree) {
+	public static void displayTree (Group2_BST<Integer> tree) {
 		tree.printTree();
 	}
 
 	/******************************
 	 * Display size of BST
 	 ******************************/
-	public static void displaySize(Group2_BST<Integer> tree) {
+	public static void displaySize (Group2_BST<Integer> tree) {
 		System.out.println("There are currently " + tree.getSize() + " elements in the tree.");
 	}
 
 	/******************************
 	 * Display # of non-leaf nodes
 	 ******************************/
-	public static void displayNonLeaf(Group2_BST<Integer> tree) {
+	public static void displayNonLeaf (Group2_BST<Integer> tree) {
 		System.out.println("There are currently " + tree.getNumberofNonLeaves() + " non-leaf nodes in the tree.");
 		System.out.println();
 	}
@@ -71,7 +71,7 @@ public class Group2_Driver {
 	/******************************
 	 * Insert & Display into BST
 	 ******************************/
-	public static void insert(Group2_BST<Integer> tree) {
+	public static void insert (Group2_BST<Integer> tree) {
 		insertNormal(tree); // Insert fixed values into BST
 
 		displayTree(tree); // Display tree
@@ -84,7 +84,7 @@ public class Group2_Driver {
 	/******************************
 	 * Delete a node & Display BST
 	 ******************************/
-	public static void delete(Group2_BST<Integer> tree, int toDelete) {
+	public static void delete (Group2_BST<Integer> tree, int toDelete) {
 		System.out.println("Was deleting " + toDelete + " successful?  " + tree.delete(toDelete));
 
 		displayTree(tree); // Print tree
@@ -96,7 +96,7 @@ public class Group2_Driver {
 	/******************************
 	 * Display Search Attempts
 	 ******************************/
-	public static void isThere(Group2_BST<Integer> tree) {
+	public static void isThere (Group2_BST<Integer> tree) {
 		// Attempt a search for a number in BST, should be true
 		System.out.println("Searching for 9 in the tree . . .");
 		System.out.println("Element 9 is in the BST:  " + tree.search(9));
@@ -111,27 +111,18 @@ public class Group2_Driver {
 	/******************************
 	 * Display Tree Traversal
 	 ******************************/
-	public static void displayTraversal(Group2_BST<Integer> tree) {
-		System.out.println("Inorder traversal of the given tree");
+	public static void displayTraversal (Group2_BST<Integer> tree) {
 		tree.inorder();
-		System.out.println();
-
-		System.out.println("Preorder traversal of the given tree");
 		tree.preorder();
-		System.out.println();
-
-		System.out.println("Postorder traversal of the given tree");
 		tree.postorder();
+		
 		System.out.println();
 
-		System.out.println("Inorder traversal w/o recursion of the given tree");
-		System.out.print("Inorder w/o recursion: ");
+		System.out.print("Inorder w/o recursion:  ");
 		tree.inorderNoRecursion();
 		System.out.println();
-		System.out.println();
 
-		System.out.println("Postorder traversal w/o recursion of the given tree");
-		System.out.print("Postorder w/o recursion: ");
+		System.out.print("Postorder w/o recursion:  ");
 		tree.postorderNoRecursion();
 
 		System.out.println();
@@ -140,11 +131,9 @@ public class Group2_Driver {
 	}
 
 	/******************************
-	 * Populate BST w/
-	 * 5, 2, -4, 3, 12, 9, 21
-	 * 19, 25 6, 8, 22, -5
+	 * Populate BST w/ 5, 2, -4, 3, 12, 9, 21 19, 25 6, 8, 22, -5
 	 ******************************/
-	private static void insertNormal(Group2_BST<Integer> tree) {
+	private static void insertNormal (Group2_BST<Integer> tree) {
 		System.out.println("Inserting 5, 2, -4, 3, 12, 9, 21, 19, 25, 6, 8, 22, -5 into BST");
 
 		tree.insert(5);
@@ -159,7 +148,7 @@ public class Group2_Driver {
 		checkSearch(tree);
 	}
 
-	private static void checkSearch(Group2_BST<Integer> tree) {
+	private static void checkSearch (Group2_BST<Integer> tree) {
 		// Attempt to insert a number, should be true
 		System.out.println("Was 25 successfully inserted?  " + tree.insert(25));
 		System.out.println();
