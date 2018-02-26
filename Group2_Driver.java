@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_Driver.java
- * Version 13.0
+ * Version 14.0
  * 
  * Driver class to test various methods
  * implemented in the BST class.
@@ -134,9 +134,9 @@ public class Group2_Driver {
 		System.out.println();
 	}
 
-	/******************************
+	/*************************************************************
 	 * Populate BST w/ 5, 2, -4, 3, 12, 9, 21 19, 25 6, 8, 22, -5
-	 ******************************/
+	 *************************************************************/
 	private static void insertNormal (Group2_BST<Integer> tree) {
 		System.out.println("Inserting 5, 2, -4, 3, 12, 9, 21, 19, 25, 6, 8, 22, -5 into BST");
 

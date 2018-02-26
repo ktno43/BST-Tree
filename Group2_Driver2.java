@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_Driver2.java
- * Version 13.0
+ * Version 14.0
  * 
  * Driver class to test various methods
  * implemented in the BST class.
@@ -38,7 +38,7 @@ import java.io.OutputStreamWriter;
 
 public class Group2_Driver2 {
 
-	public static void main(String[] args) throws IOException {
+	public static void main (String[] args) throws IOException {
 		OutputStream treeStream = new FileOutputStream("Tree.txt");
 		OutputStreamWriter treeWriter = new OutputStreamWriter(treeStream);
 		FileInputStream in = new FileInputStream("Tree.txt");
@@ -56,21 +56,21 @@ public class Group2_Driver2 {
 	/******************************
 	 * Display tree
 	 ******************************/
-	public static void displayTree(Group2_BST<String> tree) {
+	public static void displayTree (Group2_BST<String> tree) {
 		tree.printTree();
 	}
 
 	/******************************
 	 * Display size of BST
 	 ******************************/
-	public static void displaySize(Group2_BST<String> tree) {
+	public static void displaySize (Group2_BST<String> tree) {
 		System.out.println("There are currently " + tree.getSize() + " elements in the tree.");
 	}
 
 	/******************************
 	 * Display # of non-leaf nodes
 	 ******************************/
-	public static void displayNonLeaf(Group2_BST<String> tree) {
+	public static void displayNonLeaf (Group2_BST<String> tree) {
 		System.out.println("There are currently " + tree.getNumberofNonLeaves() + " non-leaf nodes in the tree.");
 		System.out.println();
 	}
@@ -80,7 +80,7 @@ public class Group2_Driver2 {
 	 * 
 	 * @throws IOException
 	 ******************************/
-	public static void insert(Group2_BST<String> tree, OutputStreamWriter treeWriter, FileInputStream in, int content)
+	public static void insert (Group2_BST<String> tree, OutputStreamWriter treeWriter, FileInputStream in, int content)
 			throws IOException {
 		insertNormal(tree); // Insert fixed values into BST
 
@@ -104,10 +104,10 @@ public class Group2_Driver2 {
 	 * 
 	 * @throws IOException
 	 ******************************/
-	public static void delete(Group2_BST<String> tree, String toDelete, OutputStreamWriter treeWriter,
+	public static void delete (Group2_BST<String> tree, String toDelete, OutputStreamWriter treeWriter,
 			FileInputStream in, int content) throws IOException {
 		System.out.println("Was deleting " + toDelete + " successful?  " + tree.delete(toDelete));
-		
+
 		System.out.println();
 		tree.printTree2(treeWriter);
 		treeWriter.flush();
@@ -126,7 +126,7 @@ public class Group2_Driver2 {
 	/******************************
 	 * Display Search Attempts
 	 ******************************/
-	public static void isThere(Group2_BST<String> tree) {
+	public static void isThere (Group2_BST<String> tree) {
 		// Attempt a search for a number in BST, should be true
 		System.out.println("Searching for Michael in the tree . . .");
 		System.out.println("Element Michael is in the BST:  " + tree.search("Michael"));
@@ -141,18 +141,18 @@ public class Group2_Driver2 {
 	/******************************
 	 * Display Tree Traversal
 	 ******************************/
-	public static void displayTraversal(Group2_BST<String> tree) {
+	public static void displayTraversal (Group2_BST<String> tree) {
 		tree.preorder();
 		tree.inorder();
 		tree.postorder();
-		
+
 		System.out.println();
 
 		System.out.println("The 4th smallest element in the tree is " + tree.getKthSmallest(4));
 		System.out.println("The 4th greatest element in the tree is " + tree.getKthLargest(4));
 
 		System.out.println();
-		
+
 		System.out.print("Inorder w/o recursion:  ");
 		tree.inorderNoRecursion();
 		System.out.println();
@@ -164,10 +164,10 @@ public class Group2_Driver2 {
 		System.out.println();
 	}
 
-	/******************************
-	 * Populate BST w/ 5, 2, -4, 3, 12, 9, 21 19, 25 6, 8, 22, -5
-	 ******************************/
-	private static void insertNormal(Group2_BST<String> tree) {
+	/****************************************************************
+	 * Populate BST w/George, Michael, Tom, Adam, Jone, Peter, Daniel
+	 ****************************************************************/
+	private static void insertNormal (Group2_BST<String> tree) {
 		System.out.println("Inserting George, Michael, Tom, Adam, Jone, Peter, Daniel into BST");
 
 		tree.insert("George");
@@ -180,7 +180,7 @@ public class Group2_Driver2 {
 		checkSearch(tree);
 	}
 
-	private static void checkSearch(Group2_BST<String> tree) {
+	private static void checkSearch (Group2_BST<String> tree) {
 		// Attempt to insert a number, should be true
 		System.out.println();
 		System.out.println("Was Daniel successfully inserted?  " + tree.insert("Daniel"));
