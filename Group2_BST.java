@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST.java
- * Version 15.0
+ * Version 16.0
  * 
  * The program works as expected, and
  * follows specifications.  All the
@@ -105,7 +105,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 
 		ArrayList<E> mahList = new ArrayList<E>();
 
-		inorderList(mahList, this.root);
+		inorderIterator(this.root, mahList);
 
 		int middle = mahList.size() / 2;
 		int evenOrOdd = mahList.size() % 2;
@@ -121,7 +121,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Find kth smallest node V2
 	 *******************************/
 	public E getKthSmallest2 (int k) {
-		if (this.root == null || k < 0 || k > this.getSize())
+		if (this.root == null || k < 0 ||  k > getSize(this.root))
 			return null;
 
 		return getKthSmallest2(k, this.root);
@@ -156,9 +156,9 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Find kth smallest node
 	 *******************************/
 	public E getKthSmallest (int k) {
-		if (this.root == null || k <= 0)
+		if (this.root == null || k <= 0 || k > getSize(this.root))
 			return null;
-
+		
 		return getKthSmallest(this.root, k);
 	}
 
@@ -190,24 +190,14 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Find kth largest node
 	 *******************************/
 	public E getKthLargest (int k) {
-		if (this.root == null || k <= 0)
+		if (this.root == null || k <= 0 ||  k > getSize(this.root))
 			return null;
 
 		ArrayList<E> mahList = new ArrayList<E>();
 
-		inorderList(mahList, this.root);
+		inorderIterator(this.root, mahList);
 
 		return mahList.get(mahList.size() - k);
-	}
-
-	private void inorderList (ArrayList<E> mahList, Group2_BST_Node<E> current) {
-		if (current.getLeftNode() != null)
-			inorderList(mahList, current.getLeftNode());
-
-		mahList.add(current.getData());
-
-		if (current.getRightNode() != null)
-			inorderList(mahList, current.getRightNode());
 	}
 
 	/*******************************
@@ -294,7 +284,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 				inorderIterator(node.getRightNode(), inorderList); // Traverse the right-subtree
 		}
 	}
-
+	
 	/*****************************************************
 	 * Question 3: Inorder traversal of BST w/o recursion
 	 *****************************************************/

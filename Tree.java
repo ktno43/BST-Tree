@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Tree.java
- * Version 15.0
+ * Version 16.0
  * 
  * The interface to be implemented  by
  * the BSTgiven in the project
