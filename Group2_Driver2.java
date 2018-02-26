@@ -1,11 +1,12 @@
 /*-
- * ***************************************
+ ****************************************
+ * Group 2
  * Kyle Nguyen
  * 
  * COMP 282
  * Spring 2018
  * Dr. Wen-Chin Hsu
- * M/W 9:30 a.M - 10:45 A.M
+ * M/W 9:30 A.M - 10:45 A.M
  * 
  * Project 1: 
  * Phase 1 (BST Implementation), 
@@ -13,13 +14,11 @@
  * Phase 3 (Question 2), &
  * Phase 4 (Question 3)
  * 
- * 
  * Group2_Driver2.java
- * Version 10.0
+ * Version 13.0
  * 
  * Driver class to test various methods
  * implemented in the BST class.
- * 
  * 
  * Also displayed is the implementation
  * of Phase 2,3 & 4.  Postorder &
@@ -143,10 +142,15 @@ public class Group2_Driver2 {
 	 * Display Tree Traversal
 	 ******************************/
 	public static void displayTraversal(Group2_BST<String> tree) {
-		tree.inorder();
 		tree.preorder();
+		tree.inorder();
 		tree.postorder();
 		
+		System.out.println();
+
+		System.out.println("The 4th smallest element in the tree is " + tree.getKthSmallest(4));
+		System.out.println("The 4th greatest element in the tree is " + tree.getKthLargest(4));
+
 		System.out.println();
 		
 		System.out.print("Inorder w/o recursion:  ");

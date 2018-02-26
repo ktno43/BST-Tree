@@ -1,38 +1,39 @@
 /*-
-*****************************************
-* Kyle Nguyen
-* 
-* COMP 282
-* Spring 2018
-* Dr. Wen-Chin Hsu
-* M/W 9:30 a.M - 10:45 A.M
-* 
+ *****************************************
+ * Group 2
+ * Kyle Nguyen
+ * 
+ * COMP 282
+ * Spring 2018
+ * Dr. Wen-Chin Hsu
+ * M/W 9:30 A.M - 10:45 A.M
+ * 
  * Project 1: 
  * Phase 1 (BST Implementation), 
  * Phase 2 (Question 1), 
  * Phase 3 (Question 2), &
  * Phase 4 (Question 3)
-* 
-* Group2_BST.java
-* Version 10.0
-* 
-* The program works as expected, and
-* follows specifications.  All the
-* methods are implemented from the 
-* interface given and work correctly.
-* 
-* The postorder & inorder traversal
-* without recursion is implemented
-* and working as it follows the 
-* specification by using a stack.
-* 
-* Also implemented is the method that
-* calculates the number of non-leaf
-* nodes within the tree.
-* 
-* All of the methods work as expected
-* and return the correct results.
-****************************************/
+ * 
+ * Group2_BST.java
+ * Version 13.0
+ * 
+ * The program works as expected, and
+ * follows specifications.  All the
+ * methods are implemented from the 
+ * interface given and work correctly.
+ * 
+ * The postorder & inorder traversal
+ * without recursion is implemented
+ * and working as it follows the 
+ * specification by using a stack.
+ * 
+ * Also implemented is the method that
+ * calculates the number of non-leaf
+ * nodes within the tree.
+ * 
+ * All of the methods work as expected
+ * and return the correct results.
+ ****************************************/
 import java.util.Stack;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -45,14 +46,14 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Get size of tree
 	 *******************************/
 	@Override
-	public int getSize() { // Get the size starting from the root
+	public int getSize () { // Get the size starting from the root
 		if (this.root == null) // If there's no root, there's no tree, size = 0
 			return 0;
 
 		return getSize(this.root);
 	}
 
-	private int getSize(Group2_BST_Node<E> currentNode) {
+	private int getSize (Group2_BST_Node<E> currentNode) {
 		if (currentNode == null) // Terminal condition, when there's no other nodes, size = 0
 			return 0;
 
@@ -64,18 +65,18 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Is tree empty?
 	 *******************************/
 	@Override
-	public boolean isEmpty() { // getSize() == 0, tree is empty, return true, else false
+	public boolean isEmpty () { // getSize() == 0, tree is empty, return true, else false
 		return getSize() == 0; // Method call to get size
 	}
 
 	/*******************************
 	 * Question 2: Get # of non-leaf nodes
 	 *******************************/
-	public int getNumberofNonLeaves() {
+	public int getNumberofNonLeaves () {
 		return getNumberofNonLeaves(this.root); // Start at root
 	}
 
-	private int getNumberofNonLeaves(Group2_BST_Node<E> n) {
+	private int getNumberofNonLeaves (Group2_BST_Node<E> n) {
 		if (n == null || (n.getLeftNode() == null && n.getRightNode() == null)) // Terminal condition, leaf node or you've reached the end of left/right subtrees
 			return 0;
 
@@ -87,7 +88,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Attempt to search for a node
 	 *******************************/
 	@Override
-	public boolean search(E e) {
+	public boolean search (E e) {
 		if (this.root == null) // If root is empty, nothing to search
 			return false; // Search unsuccessful
 
@@ -96,10 +97,68 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	}
 
 	/*******************************
+	 * Find kth smallest node
+	 *******************************/
+	public E getKthSmallest (int k) {
+		if (this.root == null || k <= 0)
+			return null;
+
+		return getKthSmallest(this.root, k);
+	}
+
+	private E getKthSmallest (Group2_BST_Node<E> current, int k) {
+		ArrayList<E> mahList = new ArrayList<E>();
+
+		helper(mahList, current, k);
+
+		if (mahList.size() < k)
+			return null;
+
+		return mahList.get(k - 1);
+	}
+
+	private void helper (ArrayList<E> mahList, Group2_BST_Node<E> current, int k) {
+		if (mahList.size() == k)
+			return;
+
+		if (current.getLeftNode() != null)
+			helper(mahList, current.getLeftNode(), k);
+
+		mahList.add(current.getData());
+
+		if (current.getRightNode() != null)
+			helper(mahList, current.getRightNode(), k);
+	}
+
+	/*******************************
+	 * Find kth largest node
+	 *******************************/
+	public E getKthLargest (int k) {
+		if (this.root == null || k <= 0)
+			return null;
+
+		ArrayList<E> mahList = new ArrayList<E>();
+
+		getKthLargest(mahList, this.root);
+
+		return mahList.get(mahList.size() - k);
+	}
+
+	private void getKthLargest (ArrayList<E> mahList, Group2_BST_Node<E> current) {
+		if (current.getLeftNode() != null)
+			getKthLargest(mahList, current.getLeftNode());
+
+		mahList.add(current.getData());
+
+		if (current.getRightNode() != null)
+			getKthLargest(mahList, current.getRightNode());
+	}
+
+	/*******************************
 	 * Attempt to insert a node
 	 *******************************/
 	@Override
-	public boolean insert(E e) {
+	public boolean insert (E e) {
 		if (this.root == null) { // If root is null, make the node to-insert as root
 			this.root = new Group2_BST_Node<E>(e);
 
@@ -114,7 +173,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Attempt to delete a node
 	 *******************************/
 	@Override
-	public boolean delete(E e) {
+	public boolean delete (E e) {
 		if (this.root == null)  // If there's no root, there's nothing to delete
 			return false; // Return false since nothing was deleted
 
@@ -126,7 +185,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Preorder traversal of BST
 	 *******************************/
 	@Override
-	public void preorder() { // Middle -> Left -> Right
+	public void preorder () { // Middle -> Left -> Right
 		ArrayList<E> resultList = new ArrayList<E>(); // Array List to store result
 		String listAsString = "Preoder:  "; // Array list to string
 
@@ -139,13 +198,15 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		System.out.println(listAsString); // Print string out
 	}
 
-	private void preorderIterator(Group2_BST_Node<E> node, ArrayList<E> preorderList) { // Pass in the node and list to be modified
+	private void preorderIterator (Group2_BST_Node<E> node, ArrayList<E> preorderList) { // Pass in the node and list to be modified
 		if (node != null) { // Keep going until there are no nodes left
 			preorderList.add(node.getData()); // Add node to preorderList
 
-			preorderIterator(node.getLeftNode(), preorderList); // Traverse left subtree
+			if (node.getLeftNode() != null)
+				preorderIterator(node.getLeftNode(), preorderList); // Traverse left subtree
 
-			preorderIterator(node.getRightNode(), preorderList); // Traverse right subtree
+			if (node.getRightNode() != null)
+				preorderIterator(node.getRightNode(), preorderList); // Traverse right subtree
 		}
 	}
 
@@ -153,7 +214,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Inorder traversal of BST
 	 *******************************/
 	@Override
-	public void inorder() { // Left -> Middle -> Right
+	public void inorder () { // Left -> Middle -> Right
 		ArrayList<E> resultList = new ArrayList<E>(); // Array list to store result
 		String listAsString = "Inorder:  "; // Array list to string
 
@@ -166,20 +227,22 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		System.out.println(listAsString); // Print string out
 	}
 
-	private void inorderIterator(Group2_BST_Node<E> node, ArrayList<E> inorderList) { // Pass in the node and the list to be modified
+	private void inorderIterator (Group2_BST_Node<E> node, ArrayList<E> inorderList) { // Pass in the node and the list to be modified
 		if (node != null) {
-			inorderIterator(node.getLeftNode(), inorderList); // Traverse left-subtree
+			if (node.getLeftNode() != null)
+				inorderIterator(node.getLeftNode(), inorderList); // Traverse left-subtree
 
 			inorderList.add(node.getData()); // Add the node to the inorderList
 
-			inorderIterator(node.getRightNode(), inorderList); // Traverse the right-subtree
+			if (node.getRightNode() != null)
+				inorderIterator(node.getRightNode(), inorderList); // Traverse the right-subtree
 		}
 	}
 
 	/*****************************************************
 	 * Question 3: Inorder traversal of BST w/o recursion
 	 *****************************************************/
-	public void inorderNoRecursion() { // Inorder traversal without recursion
+	public void inorderNoRecursion () { // Inorder traversal without recursion
 		Stack<Group2_BST_Node<E>> stacky = new Stack<Group2_BST_Node<E>>(); // Create stack
 		Group2_BST_Node<E> current = this.root; // Current position in tree (start at the root)
 
@@ -206,7 +269,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Postorder traversal of BST
 	 *******************************/
 	@Override
-	public void postorder() {  // Left -> Right -> Middle
+	public void postorder () {  // Left -> Right -> Middle
 		ArrayList<E> resultList = new ArrayList<E>(); // Array list to store result
 		String listAsString = "Postorder:  "; // Array list to string
 
@@ -219,11 +282,13 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		System.out.println(listAsString); // Print string out
 	}
 
-	private void postorderIterator(Group2_BST_Node<E> node, ArrayList<E> postorderList) { // Pass in the node and the list to be modified
+	private void postorderIterator (Group2_BST_Node<E> node, ArrayList<E> postorderList) { // Pass in the node and the list to be modified
 		if (node != null) {
-			postorderIterator(node.getLeftNode(), postorderList); // Traverse the left-subtree
+			if (node.getLeftNode() != null)
+				postorderIterator(node.getLeftNode(), postorderList); // Traverse the left-subtree
 
-			postorderIterator(node.getRightNode(), postorderList); // Traverse the right-subtree
+			if (node.getRightNode() != null)
+				postorderIterator(node.getRightNode(), postorderList); // Traverse the right-subtree
 
 			postorderList.add(node.getData()); // Add the node to the postorderList
 		}
@@ -231,8 +296,8 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 
 	/*******************************************************
 	 * Question 1: Postorder traversal of BST w/o recursion
-	*******************************************************/
-	public void postorderNoRecursion() {
+	 *******************************************************/
+	public void postorderNoRecursion () {
 		if (this.root == null) // No root, nothing to traverse
 			return;
 
@@ -273,14 +338,14 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	/*******************************
 	 * Print tree vertically
 	 *******************************/
-	public void printTree() {
+	public void printTree () {
 		this.root.printNode();
 	}
-	
+
 	/*******************************
 	 * Print tree horizontally
 	 *******************************/
-	public void printTree2(OutputStreamWriter out) throws IOException {
+	public void printTree2 (OutputStreamWriter out) throws IOException {
 		this.root.printTree(out);
 	}
 }

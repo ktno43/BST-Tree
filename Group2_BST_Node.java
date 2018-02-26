@@ -1,11 +1,12 @@
 /*-
- * ***************************************
+ ****************************************
+ * Group 2
  * Kyle Nguyen
  * 
  * COMP 282
  * Spring 2018
  * Dr. Wen-Chin Hsu
- * M/W 9:30 a.M - 10:45 A.M
+ * M/W 9:30 A.M - 10:45 A.M
  * 
  * Project 1: 
  * Phase 1 (BST Implementation), 
@@ -14,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST_Node.java
- * Version 10.0
+ * Version 13.0
  * 
  * BST Node for the BST class to use.
  * The node contains the most basic
@@ -40,14 +41,14 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	private Group2_BST_Node<E> left; // Reference to left child
 	private Group2_BST_Node<E> right; // Reference to right child
 
-	public Group2_BST_Node(E e) { // Initialization constructor
+	public Group2_BST_Node (E e) { // Initialization constructor
 		this.data = e; // Assign data to node
 	}
 
 	/*******************************
 	 * Attempt to search for a node
 	 *******************************/
-	protected boolean search(E e) {
+	protected boolean search (E e) {
 		Group2_BST_Node<E> currentNode = this; // Current reference for node
 
 		while (true) {
@@ -67,7 +68,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	/*******************************
 	 * Attempt to insert a node
 	 *******************************/
-	protected boolean insert(E e) {
+	protected boolean insert (E e) {
 		Group2_BST_Node<E> currentNode = this; // Current reference for node
 
 		while (true) { // Find a location to insert node into the BST
@@ -96,7 +97,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	/*******************************
 	 * Attempt to delete a node
 	 *******************************/
-	protected boolean delete(E e, Group2_BST_Node<E> parent) { // Delete node with value e, parent also passed in to fix references
+	protected boolean delete (E e, Group2_BST_Node<E> parent) { // Delete node with value e, parent also passed in to fix references
 		boolean goLeft = e.compareTo(this.data) < 0; // Traverse left?
 
 		if (e.compareTo(this.data) == 0) { // Match found
@@ -141,28 +142,28 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	/*******************************
 	 * Get data
 	 *******************************/
-	protected E getData() { // Return node's value
+	protected E getData () { // Return node's value
 		return this.data;
 	}
 
 	/*******************************
 	 * Get left reference
 	 *******************************/
-	protected Group2_BST_Node<E> getLeftNode() { // Return node's left reference
+	protected Group2_BST_Node<E> getLeftNode () { // Return node's left reference
 		return this.left;
 	}
 
 	/*******************************
 	 * Get right reference
 	 *******************************/
-	protected Group2_BST_Node<E> getRightNode() { // Return node's right reference
+	protected Group2_BST_Node<E> getRightNode () { // Return node's right reference
 		return this.right;
 	}
 
 	/*******************************
 	 * Get inorder successor
 	 *******************************/
-	private E getSucessor() { // Method called from this.right, keep going left to find inorder successor
+	private E getSucessor () { // Method called from this.right, keep going left to find inorder successor
 		if (this.left == null) // Found inorder successor
 			return this.data;
 
@@ -174,7 +175,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	 * Implement Comparable Interface
 	 *******************************/
 	@Override
-	public int compareTo(Group2_BST_Node<E> otherNode) { // Implement the comparable interface
+	public int compareTo (Group2_BST_Node<E> otherNode) { // Implement the comparable interface
 		return this.data.compareTo(otherNode.data);
 	}
 
@@ -183,7 +184,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	 * 
 	 * @Laurent Demailly
 	 *******************************/
-	public void printTree(OutputStreamWriter out) throws IOException {
+	public void printTree (OutputStreamWriter out) throws IOException {
 		if (this.right != null) {
 			this.right.printTree(out, true, "");
 		}
@@ -195,7 +196,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 		}
 	}
 
-	private void printNodeValue(OutputStreamWriter out) throws IOException {
+	private void printNodeValue (OutputStreamWriter out) throws IOException {
 		if (this.data == null) {
 			out.write("<null>");
 		}
@@ -206,7 +207,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 		out.write('\n');
 	}
 
-	private void printTree(OutputStreamWriter out, boolean isRight, String indent) throws IOException {
+	private void printTree (OutputStreamWriter out, boolean isRight, String indent) throws IOException {
 		if (this.right != null) {
 			this.right.printTree(out, true, indent + (isRight ? "        " : " |      "));
 		}
@@ -236,14 +237,14 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	 * @Michal Kreuzman
 	 *************************************/
 	@SuppressWarnings("hiding")
-	public <E extends Comparable<E>> void printNode() {
+	public <E extends Comparable<E>> void printNode () {
 		int maxLevel = maxLevel(this);
 
 		printNode(Collections.singletonList(this), 1, maxLevel);
 	}
 
 	@SuppressWarnings("hiding")
-	private <E extends Comparable<E>> void printNode(List<Group2_BST_Node<E>> nodes, int level, int maxLevel) {
+	private <E extends Comparable<E>> void printNode (List<Group2_BST_Node<E>> nodes, int level, int maxLevel) {
 		if (nodes.isEmpty() || isAllElementsNull(nodes))
 			return;
 
@@ -301,13 +302,13 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 		printNode(newNodes, level + 1, maxLevel);
 	}
 
-	private void printWhitespaces(int count) {
+	private void printWhitespaces (int count) {
 		for (int i = 0; i < count; i++)
 			System.out.print(" ");
 	}
 
 	@SuppressWarnings("hiding")
-	private <E extends Comparable<E>> int maxLevel(Group2_BST_Node<E> node) {
+	private <E extends Comparable<E>> int maxLevel (Group2_BST_Node<E> node) {
 		if (node == null)
 			return 0;
 
@@ -316,7 +317,7 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 	}
 
 	@SuppressWarnings("hiding")
-	private <E> boolean isAllElementsNull(List<E> list) {
+	private <E> boolean isAllElementsNull (List<E> list) {
 		for (Object object : list) {
 			if (object != null)
 				return false;
