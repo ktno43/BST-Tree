@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_Driver2.java
- * Version 14.0
+ * Version 15.0
  * 
  * Driver class to test various methods
  * implemented in the BST class.
@@ -149,7 +149,9 @@ public class Group2_Driver2 {
 		System.out.println();
 
 		System.out.println("The 4th smallest element in the tree is " + tree.getKthSmallest(4));
+		System.out.println("The 4th smallest element (not using inorder) in the tree is " + tree.getKthSmallest2(4));
 		System.out.println("The 4th greatest element in the tree is " + tree.getKthLargest(4));
+		System.out.println("The middle element is " + tree.getMiddle());
 
 		System.out.println();
 

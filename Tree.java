@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Tree.java
- * Version 14.0
+ * Version 15.0
  * 
  * The interface to be implemented  by
  * the BSTgiven in the project
@@ -23,32 +23,30 @@
  ****************************************/
 public interface Tree<E> {
 	/** Return true if the element is in the tree */
-	public boolean search(E e);
+	public boolean search (E e);
 
 	/**
-	 * Insert element e into the binary search tree. Return true if the element is
-	 * inserted successfully
+	 * Insert element e into the binary search tree. Return true if the element is inserted successfully
 	 */
-	public boolean insert(E e);
+	public boolean insert (E e);
 
 	/**
-	 * Delete the specified element from the tree. Return true if the element is
-	 * deleted successfully
+	 * Delete the specified element from the tree. Return true if the element is deleted successfully
 	 */
-	public boolean delete(E e);
+	public boolean delete (E e);
 
 	/* Inorder traversal from the root */
-	public void inorder();
+	public void inorder ();
 
 	/* postorder traversal from the root */
-	public void postorder();
+	public void postorder ();
 
 	/* preorder traversal from the root */
-	public void preorder();
+	public void preorder ();
 
 	/* Get the number of nodes in the tree */
-	public int getSize();
+	public int getSize ();
 
 	/** return true if the tree is empty */
-	public boolean isEmpty();
+	public boolean isEmpty ();
 }

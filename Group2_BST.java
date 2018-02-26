@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST.java
- * Version 14.0
+ * Version 15.0
  * 
  * The program works as expected, and
  * follows specifications.  All the
@@ -97,6 +97,62 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	}
 
 	/*******************************
+	 * Get middle element
+	 *******************************/
+	public E getMiddle () {
+		if (this.root == null)
+			return null;
+
+		ArrayList<E> mahList = new ArrayList<E>();
+
+		inorderList(mahList, this.root);
+
+		int middle = mahList.size() / 2;
+		int evenOrOdd = mahList.size() % 2;
+
+		if (evenOrOdd == 1)
+			return mahList.get(middle);
+
+		else
+			return mahList.get(middle - 1);
+	}
+
+	/*******************************
+	 * Find kth smallest node V2
+	 *******************************/
+	public E getKthSmallest2 (int k) {
+		if (this.root == null || k < 0 || k > this.getSize())
+			return null;
+
+		return getKthSmallest2(k, this.root);
+	}
+
+	private E getKthSmallest2 (int k, Group2_BST_Node<E> current) {
+		Group2_BST_Node<E> A = current.getLeftNode();
+		Group2_BST_Node<E> B = current.getRightNode();
+
+		if ((A == null) && (k == 1)) {
+			return current.getData();
+		}
+
+		else if ((A == null) && (k == 2)) {
+			return B.getData();
+		}
+
+		else if (k <= A.getNumNodes()) {
+			return getKthSmallest2(k, A);
+		}
+
+		else if (k == A.getNumNodes() + 1) {
+			return current.getData();
+		}
+
+		else {
+			return getKthSmallest2(k - A.getNumNodes() - 1, B);
+		}
+	}
+
+	/*******************************
 	 * Find kth smallest node
 	 *******************************/
 	public E getKthSmallest (int k) {
@@ -139,19 +195,19 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 
 		ArrayList<E> mahList = new ArrayList<E>();
 
-		getKthLargest(mahList, this.root);
+		inorderList(mahList, this.root);
 
 		return mahList.get(mahList.size() - k);
 	}
 
-	private void getKthLargest (ArrayList<E> mahList, Group2_BST_Node<E> current) {
+	private void inorderList (ArrayList<E> mahList, Group2_BST_Node<E> current) {
 		if (current.getLeftNode() != null)
-			getKthLargest(mahList, current.getLeftNode());
+			inorderList(mahList, current.getLeftNode());
 
 		mahList.add(current.getData());
 
 		if (current.getRightNode() != null)
-			getKthLargest(mahList, current.getRightNode());
+			inorderList(mahList, current.getRightNode());
 	}
 
 	/*******************************
