@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST.java
- * Version 16.0
+ * Version 17.0
  * 
  * The program works as expected, and
  * follows specifications.  All the
@@ -46,14 +46,14 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Get size of tree
 	 *******************************/
 	@Override
-	public int getSize () { // Get the size starting from the root
+	public int getSize() { // Get the size starting from the root
 		if (this.root == null) // If there's no root, there's no tree, size = 0
 			return 0;
 
 		return getSize(this.root);
 	}
 
-	private int getSize (Group2_BST_Node<E> currentNode) {
+	private int getSize(Group2_BST_Node<E> currentNode) {
 		if (currentNode == null) // Terminal condition, when there's no other nodes, size = 0
 			return 0;
 
@@ -62,21 +62,38 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	}
 
 	/*******************************
-	 * Is tree empty?
+	 * Get height of tree
 	 *******************************/
-	@Override
-	public boolean isEmpty () { // getSize() == 0, tree is empty, return true, else false
-		return getSize() == 0; // Method call to get size
+	public int getHeight() {
+		if (this.root == null) // If there's no tree, height is 0
+			return 0;
+
+		return getHeight(this.root); // Get the height of the tree
+	}
+
+	private int getHeight(Group2_BST_Node<E> node) {
+		if (node == null) // If the
+			return 0;
+
+		return 1 + Math.max(getHeight(node.getLeftNode()), getHeight(node.getRightNode())); // Get the height max of the children + 1
 	}
 
 	/*******************************
-	 * Question 2: Get # of non-leaf nodes
+	 * Is tree empty?
 	 *******************************/
-	public int getNumberofNonLeaves () {
+	@Override
+	public boolean isEmpty() { // getSize() == 0, tree is empty, return true, else false
+		return getSize() == 0; // Method call to get size
+	}
+
+	/*************************************
+	 * Question 2: Get # of non-leaf nodes
+	 *************************************/
+	public int getNumberofNonLeaves() {
 		return getNumberofNonLeaves(this.root); // Start at root
 	}
 
-	private int getNumberofNonLeaves (Group2_BST_Node<E> n) {
+	private int getNumberofNonLeaves(Group2_BST_Node<E> n) {
 		if (n == null || (n.getLeftNode() == null && n.getRightNode() == null)) // Terminal condition, leaf node or you've reached the end of left/right subtrees
 			return 0;
 
@@ -88,7 +105,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Attempt to search for a node
 	 *******************************/
 	@Override
-	public boolean search (E e) {
+	public boolean search(E e) {
 		if (this.root == null) // If root is empty, nothing to search
 			return false; // Search unsuccessful
 
@@ -99,38 +116,72 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	/*******************************
 	 * Get middle element
 	 *******************************/
-	public E getMiddle () {
-		if (this.root == null)
+	public E getMiddle() {
+		if (this.root == null) // If root is empty, nothing to search
 			return null;
 
-		ArrayList<E> mahList = new ArrayList<E>();
+		ArrayList<E> mahList = new ArrayList<E>(); // List to put elements when traversed into
 
-		inorderIterator(this.root, mahList);
+		inorderIterator(this.root, mahList); // Iterate through the tree and store in the array list
 
-		int middle = mahList.size() / 2;
-		int evenOrOdd = mahList.size() % 2;
+		int middle = mahList.size() / 2; // Integer division (floor)
 
-		if (evenOrOdd == 1)
+		if (mahList.size() % 2 == 1) // Odd so print out element at the index middle (offset by 1 already)
 			return mahList.get(middle);
 
 		else
-			return mahList.get(middle - 1);
+			return mahList.get(middle - 1); // Even so print out element to the left of the "center"
+	}
+	
+	/*******************************
+	 * Find kth smallest node
+	 *******************************/
+	public E getKthSmallest(int k) {
+		if (this.root == null || k <= 0 || k > getSize()) // If there's no tree, or search element is < 0 or bigger than the tree nothing to search for
+			return null;
+
+		return getKthSmallest(this.root, k); // Get the kth smallest element in the tree
+	}
+
+	private E getKthSmallest(Group2_BST_Node<E> current, int k) { // Inorder traversal of the tree
+		ArrayList<E> mahList = new ArrayList<E>(); // Array list for traversal of the tree
+
+		helper(mahList, current, k); // Helper method to find kth smallest element
+
+		if (mahList.size() < k) // If the list is smaller than the k, it wasn't found
+			return null;
+
+		return mahList.get(k - 1); // K was found, so fix the offset by 1
+	}
+
+	private void helper(ArrayList<E> mahList, Group2_BST_Node<E> current, int k) { // Helper method of inorder iterator
+		if (mahList.size() == k) // Match found so stop the list here
+			return;
+
+		if (current.getLeftNode() != null) // If the left reference is not null
+			helper(mahList, current.getLeftNode(), k); // Add to the array list
+
+		mahList.add(current.getData()); // Add the current (middle)
+
+		if (current.getRightNode() != null) // If the right reference is not null
+			helper(mahList, current.getRightNode(), k); // Add to the array list
 	}
 
 	/*******************************
 	 * Find kth smallest node V2
 	 *******************************/
-	public E getKthSmallest2 (int k) {
-		if (this.root == null || k < 0 ||  k > getSize(this.root))
+	public E getKthSmallest2(int k) {
+		if (this.root == null || k <= 0 || k > getSize()) // If there's no tree, or search element is < 0 or bigger than the tree nothing to search for
 			return null;
 
-		return getKthSmallest2(k, this.root);
+		return getKthSmallest2(k, this.root);  // Get the kth smallest element
 	}
 
-	private E getKthSmallest2 (int k, Group2_BST_Node<E> current) {
-		Group2_BST_Node<E> A = current.getLeftNode();
-		Group2_BST_Node<E> B = current.getRightNode();
+	private E getKthSmallest2(int k, Group2_BST_Node<E> current) {
+		Group2_BST_Node<E> A = current.getLeftNode(); // Left reference of current
+		Group2_BST_Node<E> B = current.getRightNode(); // Right reference of current
 
+		// In the notes AVL Deletion
 		if ((A == null) && (k == 1)) {
 			return current.getData();
 		}
@@ -139,72 +190,38 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 			return B.getData();
 		}
 
-		else if (k <= A.getNumNodes()) {
+		else if (k <= getSize(A)) {
 			return getKthSmallest2(k, A);
 		}
 
-		else if (k == A.getNumNodes() + 1) {
+		else if (k == getSize(A) + 1) {
 			return current.getData();
 		}
 
 		else {
-			return getKthSmallest2(k - A.getNumNodes() - 1, B);
+			return getKthSmallest2(k - getSize(A) - 1, B);
 		}
-	}
-
-	/*******************************
-	 * Find kth smallest node
-	 *******************************/
-	public E getKthSmallest (int k) {
-		if (this.root == null || k <= 0 || k > getSize(this.root))
-			return null;
-		
-		return getKthSmallest(this.root, k);
-	}
-
-	private E getKthSmallest (Group2_BST_Node<E> current, int k) {
-		ArrayList<E> mahList = new ArrayList<E>();
-
-		helper(mahList, current, k);
-
-		if (mahList.size() < k)
-			return null;
-
-		return mahList.get(k - 1);
-	}
-
-	private void helper (ArrayList<E> mahList, Group2_BST_Node<E> current, int k) {
-		if (mahList.size() == k)
-			return;
-
-		if (current.getLeftNode() != null)
-			helper(mahList, current.getLeftNode(), k);
-
-		mahList.add(current.getData());
-
-		if (current.getRightNode() != null)
-			helper(mahList, current.getRightNode(), k);
 	}
 
 	/*******************************
 	 * Find kth largest node
 	 *******************************/
-	public E getKthLargest (int k) {
-		if (this.root == null || k <= 0 ||  k > getSize(this.root))
+	public E getKthLargest(int k) {
+		if (this.root == null || k <= 0 || k > getSize(this.root)) // If there's no tree, or search element is < 0 or bigger than the tree nothing to search for
 			return null;
 
-		ArrayList<E> mahList = new ArrayList<E>();
+		ArrayList<E> mahList = new ArrayList<E>(); // List for inorder traversal
 
-		inorderIterator(this.root, mahList);
+		inorderIterator(this.root, mahList); // Inorder iterator for tree
 
-		return mahList.get(mahList.size() - k);
+		return mahList.get(mahList.size() - k); // Get the difference between the size and K, it will give the kth largest element
 	}
 
 	/*******************************
 	 * Attempt to insert a node
 	 *******************************/
 	@Override
-	public boolean insert (E e) {
+	public boolean insert(E e) {
 		if (this.root == null) { // If root is null, make the node to-insert as root
 			this.root = new Group2_BST_Node<E>(e);
 
@@ -219,7 +236,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Attempt to delete a node
 	 *******************************/
 	@Override
-	public boolean delete (E e) {
+	public boolean delete(E e) {
 		if (this.root == null)  // If there's no root, there's nothing to delete
 			return false; // Return false since nothing was deleted
 
@@ -228,10 +245,36 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	}
 
 	/*******************************
+	 * Level-order traversal of BST
+	 *******************************/
+	public void levelorder() {
+		int currentLevel = 1; // Current level starts at 1
+
+		System.out.print("Level-order:  "); // String for display
+
+		for (currentLevel = 1; currentLevel <= getHeight(); currentLevel += 1) { // For all of the element
+			levelorder(this.root, currentLevel);
+		}
+	}
+
+	private void levelorder(Group2_BST_Node<E> current, int currentLevel) {
+		if (current == null)
+			return;
+
+		if (currentLevel == 1)
+			System.out.print(current.getData() + "  ");
+
+		else if (currentLevel > 1) {
+			levelorder(current.getLeftNode(), currentLevel - 1);
+			levelorder(current.getRightNode(), currentLevel - 1);
+		}
+	}
+
+	/*******************************
 	 * Preorder traversal of BST
 	 *******************************/
 	@Override
-	public void preorder () { // Middle -> Left -> Right
+	public void preorder() { // Middle -> Left -> Right
 		ArrayList<E> resultList = new ArrayList<E>(); // Array List to store result
 		String listAsString = "Preoder:  "; // Array list to string
 
@@ -244,7 +287,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		System.out.println(listAsString); // Print string out
 	}
 
-	private void preorderIterator (Group2_BST_Node<E> node, ArrayList<E> preorderList) { // Pass in the node and list to be modified
+	private void preorderIterator(Group2_BST_Node<E> node, ArrayList<E> preorderList) { // Pass in the node and list to be modified
 		if (node != null) { // Keep going until there are no nodes left
 			preorderList.add(node.getData()); // Add node to preorderList
 
@@ -260,7 +303,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Inorder traversal of BST
 	 *******************************/
 	@Override
-	public void inorder () { // Left -> Middle -> Right
+	public void inorder() { // Left -> Middle -> Right
 		ArrayList<E> resultList = new ArrayList<E>(); // Array list to store result
 		String listAsString = "Inorder:  "; // Array list to string
 
@@ -273,7 +316,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		System.out.println(listAsString); // Print string out
 	}
 
-	private void inorderIterator (Group2_BST_Node<E> node, ArrayList<E> inorderList) { // Pass in the node and the list to be modified
+	private void inorderIterator(Group2_BST_Node<E> node, ArrayList<E> inorderList) { // Pass in the node and the list to be modified
 		if (node != null) {
 			if (node.getLeftNode() != null)
 				inorderIterator(node.getLeftNode(), inorderList); // Traverse left-subtree
@@ -284,11 +327,11 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 				inorderIterator(node.getRightNode(), inorderList); // Traverse the right-subtree
 		}
 	}
-	
+
 	/*****************************************************
 	 * Question 3: Inorder traversal of BST w/o recursion
 	 *****************************************************/
-	public void inorderNoRecursion () { // Inorder traversal without recursion
+	public void inorderNoRecursion() { // Inorder traversal without recursion
 		Stack<Group2_BST_Node<E>> stacky = new Stack<Group2_BST_Node<E>>(); // Create stack
 		Group2_BST_Node<E> current = this.root; // Current position in tree (start at the root)
 
@@ -315,7 +358,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	 * Postorder traversal of BST
 	 *******************************/
 	@Override
-	public void postorder () {  // Left -> Right -> Middle
+	public void postorder() {  // Left -> Right -> Middle
 		ArrayList<E> resultList = new ArrayList<E>(); // Array list to store result
 		String listAsString = "Postorder:  "; // Array list to string
 
@@ -328,7 +371,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		System.out.println(listAsString); // Print string out
 	}
 
-	private void postorderIterator (Group2_BST_Node<E> node, ArrayList<E> postorderList) { // Pass in the node and the list to be modified
+	private void postorderIterator(Group2_BST_Node<E> node, ArrayList<E> postorderList) { // Pass in the node and the list to be modified
 		if (node != null) {
 			if (node.getLeftNode() != null)
 				postorderIterator(node.getLeftNode(), postorderList); // Traverse the left-subtree
@@ -343,7 +386,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	/*******************************************************
 	 * Question 1: Postorder traversal of BST w/o recursion
 	 *******************************************************/
-	public void postorderNoRecursion () {
+	public void postorderNoRecursion() {
 		if (this.root == null) // No root, nothing to traverse
 			return;
 
@@ -384,14 +427,14 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	/*******************************
 	 * Print tree vertically
 	 *******************************/
-	public void printTree () {
+	public void printTree() {
 		this.root.printNode();
 	}
 
 	/*******************************
 	 * Print tree horizontally
 	 *******************************/
-	public void printTree2 (OutputStreamWriter out) throws IOException {
+	public void printTree2(OutputStreamWriter out) throws IOException {
 		this.root.printTree(out);
 	}
 }

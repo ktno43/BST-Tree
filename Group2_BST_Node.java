@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST_Node.java
- * Version 16.0
+ * Version 17.0
  * 
  * BST Node for the BST class to use.
  * The node contains the most basic
@@ -43,21 +43,6 @@ public class Group2_BST_Node<E extends Comparable<E>> implements Comparable<Grou
 
 	public Group2_BST_Node (E e) { // Initialization constructor
 		this.data = e; // Assign data to node
-	}
-
-	/**********************************
-	 * Get number of nodes in subtrees
-	 **********************************/
-	protected int getNumNodes () {
-		int count = 1; // Include parent
-
-		if (this.left != null) // Does it have a left-subtree?
-			count += this.left.getNumNodes(); // Include that subtree too
-
-		if (this.right != null) // Does it have a right-subtree?
-			count += this.right.getNumNodes(); // Include that subtree too
-
-		return count; // Return final count
 	}
 
 	/*******************************

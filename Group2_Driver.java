@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_Driver.java
- * Version 16.0
+ * Version 17.0
  * 
  * Driver class to test various methods
  * implemented in the BST class.
@@ -32,7 +32,7 @@
  ****************************************/
 public class Group2_Driver {
 
-	public static void main (String[] args) {
+	public static void main(String[] args) {
 		Group2_BST<Integer> tree = new Group2_BST<Integer>();
 
 		displaySize(tree);
@@ -48,54 +48,63 @@ public class Group2_Driver {
 	/******************************
 	 * Display tree
 	 ******************************/
-	public static void displayTree (Group2_BST<Integer> tree) {
+	public static void displayTree(Group2_BST<Integer> tree) {
 		tree.printTree();
 	}
 
 	/******************************
 	 * Display size of BST
 	 ******************************/
-	public static void displaySize (Group2_BST<Integer> tree) {
-		System.out.println("There are currently " + tree.getSize() + " elements in the tree.");
+	public static void displaySize(Group2_BST<Integer> tree) {
+		System.out.println("There are currently " + tree.getSize() + " elements in the tree");
 	}
 
 	/******************************
 	 * Display # of non-leaf nodes
 	 ******************************/
-	public static void displayNonLeaf (Group2_BST<Integer> tree) {
-		System.out.println("There are currently " + tree.getNumberofNonLeaves() + " non-leaf nodes in the tree.");
+	public static void displayNonLeaf(Group2_BST<Integer> tree) {
+		System.out.println("There are currently " + tree.getNumberofNonLeaves() + " non-leaf nodes in the tree");
+	}
+
+	/******************************
+	 * Display height of BST
+	 ******************************/
+	public static void displayHeight(Group2_BST<Integer> tree) {
+		System.out.println("The height is currently " + tree.getHeight());
 		System.out.println();
 	}
 
 	/******************************
 	 * Insert & Display into BST
 	 ******************************/
-	public static void insert (Group2_BST<Integer> tree) {
+	public static void insert(Group2_BST<Integer> tree) {
 		insertNormal(tree); // Insert fixed values into BST
 
 		displayTree(tree); // Display tree
 		isThere(tree); // Check to see if elements are in the BST
 		displaySize(tree); // Get size of tree
 		displayNonLeaf(tree); // Get # of non-leaves
+		displayHeight(tree); // Get height of tree
 		displayTraversal(tree); // Display Traversals
 	}
 
 	/******************************
 	 * Delete a node & Display BST
 	 ******************************/
-	public static void delete (Group2_BST<Integer> tree, int toDelete) {
+	public static void delete(Group2_BST<Integer> tree, int toDelete) {
 		System.out.println("Was deleting " + toDelete + " successful?  " + tree.delete(toDelete));
 
 		displayTree(tree); // Print tree
 		displaySize(tree); // Get size of tree
 		displayNonLeaf(tree); // Get # of non-leaves
+		displayHeight(tree); // Get height of tree
 		displayTraversal(tree); // Display traversals
 	}
 
 	/******************************
 	 * Display Search Attempts
 	 ******************************/
-	public static void isThere (Group2_BST<Integer> tree) {
+	public static void isThere(Group2_BST<Integer> tree) {
 		// Attempt a search for a number in BST, should be true
 		System.out.println("Searching for 9 in the tree . . .");
 		System.out.println("Element 9 is in the BST:  " + tree.search(9));
@@ -110,7 +119,7 @@ public class Group2_Driver {
 	/******************************
 	 * Display Tree Traversal
 	 ******************************/
-	public static void displayTraversal (Group2_BST<Integer> tree) {
+	public static void displayTraversal(Group2_BST<Integer> tree) {
 		tree.preorder();
 		tree.inorder();
 		tree.postorder();
@@ -118,7 +127,8 @@ public class Group2_Driver {
 		System.out.println();
 
 		System.out.println("The 4th smallest element in the tree is " + tree.getKthSmallest(4));
-		System.out.println("The 4th smallest element (not using inorder) in the tree is " + tree.getKthSmallest2(4));
+		System.out.println(
+				"The 4th smallest element (not using inorder) in the tree is " + tree.getKthSmallest2(4));
 		System.out.println("The 4th greatest element in the tree is " + tree.getKthLargest(4));
 		System.out.println("The middle element is " + tree.getMiddle());
 
@@ -133,13 +143,12 @@ public class Group2_Driver {
 
 		System.out.println();
 		System.out.println();
-		System.out.println();
 	}
 
 	/*************************************************************
 	 * Populate BST w/ 5, 2, -4, 3, 12, 9, 21 19, 25 6, 8, 22, -5
 	 *************************************************************/
-	private static void insertNormal (Group2_BST<Integer> tree) {
+	private static void insertNormal(Group2_BST<Integer> tree) {
 		System.out.println("Inserting 5, 2, -4, 3, 12, 9, 21, 19, 25, 6, 8, 22, -5 into BST");
 
 		tree.insert(5);
@@ -154,7 +163,7 @@ public class Group2_Driver {
 		checkSearch(tree);
 	}
 
-	private static void checkSearch (Group2_BST<Integer> tree) {
+	private static void checkSearch(Group2_BST<Integer> tree) {
 		// Attempt to insert a number, should be true
 		System.out.println("Was 25 successfully inserted?  " + tree.insert(25));
 		System.out.println();
