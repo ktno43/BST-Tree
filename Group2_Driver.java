@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_Driver.java
- * Version 17.0
+ * Version 18.0
  * 
  * Driver class to test various methods
  * implemented in the BST class.
@@ -120,6 +120,8 @@ public class Group2_Driver {
 	 * Display Tree Traversal
 	 ******************************/
 	public static void displayTraversal(Group2_BST<Integer> tree) {
+		tree.levelorder();
+		System.out.println();
 		tree.preorder();
 		tree.inorder();
 		tree.postorder();
@@ -133,7 +135,10 @@ public class Group2_Driver {
 		System.out.println("The middle element is " + tree.getMiddle());
 
 		System.out.println();
-
+		
+		tree.levelOrder2();
+		System.out.println();
+		
 		System.out.print("Inorder w/o recursion:  ");
 		tree.inorderNoRecursion();
 		System.out.println();
@@ -141,6 +146,7 @@ public class Group2_Driver {
 		System.out.print("Postorder w/o recursion:  ");
 		tree.postorderNoRecursion();
 
+		System.out.println();
 		System.out.println();
 		System.out.println();
 	}

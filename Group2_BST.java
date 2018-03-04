@@ -1,4 +1,5 @@
-/*-
+
+/*
  *****************************************
  * Group 2
  * Kyle Nguyen
@@ -15,7 +16,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST.java
- * Version 17.0
+ * Version 18.0
  * 
  * The program works as expected, and
  * follows specifications.  All the
@@ -38,6 +39,8 @@ import java.util.Stack;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 	private Group2_BST_Node<E> root; // Root Node
@@ -132,7 +135,7 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		else
 			return mahList.get(middle - 1); // Even so print out element to the left of the "center"
 	}
-	
+
 	/*******************************
 	 * Find kth smallest node
 	 *******************************/
@@ -267,6 +270,31 @@ public class Group2_BST<E extends Comparable<E>> implements Tree<E> {
 		else if (currentLevel > 1) {
 			levelorder(current.getLeftNode(), currentLevel - 1);
 			levelorder(current.getRightNode(), currentLevel - 1);
+		}
+	}
+
+	/*****************************************************
+	 * Level-order traversal of BST w/o recursion
+	 *****************************************************/
+	public void levelOrder2() {
+		if (this.root == null)
+			return;
+
+		Queue<Group2_BST_Node<E>> myQueue = new LinkedList<Group2_BST_Node<E>>();
+
+		System.out.print("Level-order w/o recursion: ");
+
+		myQueue.add(this.root);
+
+		while (myQueue.size() > 0) {
+			Group2_BST_Node<E> currentNode = myQueue.poll();
+			System.out.print(currentNode.getData() + " ");
+
+			if (currentNode.getLeftNode() != null)
+				myQueue.add(currentNode.getLeftNode());
+
+			if (currentNode.getRightNode() != null)
+				myQueue.add(currentNode.getRightNode());
 		}
 	}
 

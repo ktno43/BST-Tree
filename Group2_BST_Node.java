@@ -15,7 +15,7 @@
  * Phase 4 (Question 3)
  * 
  * Group2_BST_Node.java
- * Version 17.0
+ * Version 18.0
  * 
  * BST Node for the BST class to use.
  * The node contains the most basic
